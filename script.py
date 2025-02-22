@@ -31,12 +31,14 @@ def scrape_data_point():
         soup = bs4.BeautifulSoup(req.text, "html.parser")
         # Find the "most read" container by class
         most_read_section = soup.find("div", class_="section-most-read")
+        data_point = ""
         if most_read_section:
             # Look for the anchor inside it
             link = most_read_section.find("a", class_="frontpage-link")
             if link:
-                return link.get_text(strip=True)
-    return ""
+                data_point = link.get_text(strip=True)
+                loguru.logger.info(f"Data point: {data_point}")
+    return data_point
 
 
 if __name__ == "__main__":
