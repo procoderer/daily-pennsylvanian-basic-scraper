@@ -1,6 +1,6 @@
 """
-Scrapes a headline from The Daily Pennsylvanian website and saves it to a 
-JSON file that tracks headlines over time.
+Scrapes the title of the most read article from The Daily Pennsylvanian website
+and saves it to a JSON file that tracks headlines over time.
 """
 
 import os
@@ -15,10 +15,10 @@ import loguru
 
 def scrape_data_point():
     """
-    Scrapes the main headline from The Daily Pennsylvanian home page.
+    Scrapes the title of the most read article from The Daily Pennsylvanian home page.
 
     Returns:
-        str: The headline text if found, otherwise an empty string.
+        str: The article title if found, otherwise an empty string.
     """
     headers = {
         "User-Agent": "cis3500-scraper"
@@ -29,7 +29,8 @@ def scrape_data_point():
 
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        target_element = soup.find("a", class_="frontpage-link")
+        # Look for the 'most read' container and then the anchor tag
+        target_element = soup.select_one('div#mostRead a.frontpage-link.standard-link')
         data_point = "" if target_element is None else target_element.text
         loguru.logger.info(f"Data point: {data_point}")
         return data_point
