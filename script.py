@@ -27,7 +27,7 @@ def scrape_data_point():
     loguru.logger.info(f"Request URL: {req.url}")
     loguru.logger.info(f"Request status code: {req.status_code}")
 
-    if not req.ok:
+    if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
         target_element = soup.find_all("a", class_="frontpage-link", limit=2)
         data_point = "" if len(target_element) < 2 else target_element[1].text
