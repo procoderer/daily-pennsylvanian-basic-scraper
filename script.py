@@ -1,6 +1,6 @@
 """
-Scrapes the title of the most read article from The Daily Pennsylvanian website
-and saves it to a JSON file that tracks headlines over time.
+Scrapes the second headline from The Daily Pennsylvanian website and saves it to a 
+JSON file that tracks second headlines over time.
 """
 
 import os
@@ -15,15 +15,12 @@ import loguru
 
 def scrape_data_point():
     """
-    Scrapes the title of the most read article from The Daily Pennsylvanian home page.
+    Scrapes the second headline from The Daily Pennsylvanian home page.
 
     Returns:
-        str: The article title if found, otherwise an empty string.
+        str: The headline text if found, otherwise an empty string.
     """
-    headers = {
-        "User-Agent": "cis3500-scraper"
-    }
-    req = requests.get("https://www.thedp.com", headers=headers)
+    req = requests.get("https://www.thedp.com")
     loguru.logger.info(f"Request URL: {req.url}")
     loguru.logger.info(f"Request status code: {req.status_code}")
 

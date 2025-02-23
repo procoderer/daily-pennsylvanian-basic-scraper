@@ -104,6 +104,10 @@ You can then run the script to try it out with:
 pipenv run python script.py
 ```
 
+## Scraper Modification
+
+The scraper has been modified to instead extract the title of the second headline. I changed the scraper so that `find_all()` is used with `limit=2` instead of `find()`. I then access index 1 of the result to get the target element in which to get the text from. I did this because I noticed that the second headline is inside the second `"a"` that has `class_="frontpage-link"`. 
+
 ## Licensing
 
 This software is distributed under the terms of the MIT License. You have the freedom to use, modify, distribute, and sell it for any purpose. However, you must include the original copyright notice and the permission notice found in the LICENSE file in all copies or substantial portions of the software.
