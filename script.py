@@ -28,36 +28,13 @@ def scrape_data_point():
     loguru.logger.info(f"Request status code: {req.status_code}")
 
     if not req.ok:
-        return ""
-
-    soup = bs4.BeautifulSoup(req.text, "html.parser")
-
-    # 1) Find the <span id="mostRead">
-    most_read_span = soup.find("span", id="mostRead")
-    if not most_read_span:
-        loguru.logger.warning("Could not find 'span' with id='mostRead'.")
-        return ""
-    
-    row_div = most_read_span.find("div", class_="row")
-    if not row_div:
-        loguru.logger.warning("Could not find 'div' with class='row'.")
-        return ""
-
-    # 2) Inside that, find the <div class="most-read-item">
-    link_container = row_div.find("div", class_="most-read-item")
-    if not link_container:
-        loguru.logger.warning("Could not find 'div' with class='most-read-item'.")
-        return ""
-
-    # 3) Finally, find the <a> tag with the classes "frontpage-link"
-    link_tag = link_container.find("a", class_="frontpage-link")
-    if not link_tag:
-        loguru.logger.warning("Could not find <a> with class='frontpage-link'.")
-        return ""
-
-    data_point = link_tag.text
-    loguru.logger.info(f"Data point: {data_point}")
-    return data_point
+        soup = bs4.BeautifulSoup(req.text, "html.parser")
+        target_element = soup.select_one(
+            '#mostRead .col-sm-5.most-read-item a.frontpage-link.standard-link'
+        )
+        data_point = "" if target_element is None else target_element.text
+        loguru.logger.info(f"Data point: {data_point}")
+        return data_point
 
 
 if __name__ == "__main__":
