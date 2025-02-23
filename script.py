@@ -33,13 +33,18 @@ def scrape_data_point():
     soup = bs4.BeautifulSoup(req.text, "html.parser")
 
     # 1) Find the <span id="mostRead">
-    most_read_div = soup.find("span", id="mostRead")
-    if not most_read_div:
+    most_read_span = soup.find("span", id="mostRead")
+    if not most_read_span:
         loguru.logger.warning("Could not find 'span' with id='mostRead'.")
+        return ""
+    
+    row_div = most_read_span.find("div", class_="row")
+    if not row_div:
+        loguru.logger.warning("Could not find 'div' with class='row'.")
         return ""
 
     # 2) Inside that, find the <div class="most-read-item">
-    link_container = most_read_div.find("div", class_="most-read-item")
+    link_container = row_div.find("div", class_="most-read-item")
     if not link_container:
         loguru.logger.warning("Could not find 'div' with class='most-read-item'.")
         return ""
