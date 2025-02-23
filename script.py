@@ -29,10 +29,8 @@ def scrape_data_point():
 
     if not req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        target_element = soup.select_one(
-            '#mostRead .col-sm-5.most-read-item a.frontpage-link.standard-link'
-        )
-        data_point = "" if target_element is None else target_element.text
+        target_element = soup.find_all("a", class_="frontpage-link", limit=2)
+        data_point = "" if len(target_element) < 2 else target_element[1].text
         loguru.logger.info(f"Data point: {data_point}")
         return data_point
 
