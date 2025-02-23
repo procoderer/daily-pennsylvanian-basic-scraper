@@ -29,9 +29,9 @@ def scrape_data_point():
 
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        most_read_section = soup.find("span", id="mostRead")
-        if most_read_section:
-            target_element = most_read_section.find("a", class_="frontpage-link")
+        sibling = soup.find("div", class_="top-thumbnail")
+        if sibling:
+            target_element = sibling.find_next_sibling("a", class_="frontpage-link")
             data_point = "" if target_element is None else target_element.text
             loguru.logger.info(f"Data point: {data_point}")
             return data_point
