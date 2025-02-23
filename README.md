@@ -106,7 +106,11 @@ pipenv run python script.py
 
 ## Scraper Modification
 
-The scraper has been modified to instead extract the title of the second headline. I changed the scraper so that `find_all()` is used with `limit=2` instead of `find()`. I then access index 1 of the result to get the target element in which to get the text from. I did this because I noticed that the second headline is inside the second `"a"` that has `class_="frontpage-link"`. 
+The scraper has been modified to instead extract the title of the second headline. I changed the scraper so that `find_all()` is used with `limit=2` instead of `find()`. I then access index 1 of the result to get the target element in which to get the text from. I did this because I noticed that the second headline is inside the second `"a"` that has `class_="frontpage-link"`.
+
+## Interpreting Cron Syntax
+
+`"0 20 * * *"` means each day at 20:00 (8 PM), specifically at the 0th minute of the 20th hour, every day, every month, and every day of the week.
 
 ## Licensing
 
